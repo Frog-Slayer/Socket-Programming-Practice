@@ -20,10 +20,10 @@ public class UDPClient {
         return new String(bytes, 0, len);
     }
 
-    public void run() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public void run() {
 
-        try (DatagramSocket socket = new DatagramSocket()) {
+        try (DatagramSocket socket = new DatagramSocket(); BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+
             InetAddress address = InetAddress.getByName(serverHost);
 
             String input = br.readLine();
@@ -35,9 +35,12 @@ public class UDPClient {
 
             System.out.println(bytesToString(inPacket.getData()));
         }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new UDPClient().run();
     }
 }
